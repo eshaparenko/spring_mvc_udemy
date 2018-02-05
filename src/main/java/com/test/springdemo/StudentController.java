@@ -1,12 +1,17 @@
 package com.test.springdemo;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,6 +19,14 @@ import java.util.Map;
 @RequestMapping("/student")
 public class StudentController
 {
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
+
     @Value("#{countryOptions}")
     private Map<String, String> countryOptions;
 
@@ -24,9 +37,15 @@ public class StudentController
         model.addAttribute("countryOptions", countryOptions);
         return "student-form";
     }
-    @RequestMapping(value = "/processForm")
-    public String processForm(@ModelAttribute("student") Student student){
+    @RequestMapping("/processForm")
+    public String processForm(@Valid@ModelAttribute("student") Student student, BindingResult bindingResult){
         System.out.println("Student: " + student.getFirstName()+" "+student.getLastName());
-        return "student-confirmation";
+        if (bindingResult.hasErrors()){
+            return "student-form";
+        }
+        else {
+            return "student-confirmation";
+        }
+
     }
 }

@@ -2,29 +2,37 @@ package com.test.springdemo;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.validation.constraints.NotNull;
 import java.util.LinkedHashMap;
 
 public class Student
 {
+    @NotNull(message="is required")
     private String firstName;
+    @NotNull(message="is required")
     private String lastName;
+
     private String company;
+
     private String[] operatingSystems;
 
+    private String sex;
 
     private String country;
+
     private String favoriteLanguage;
+
     @Value("#{countryOptions}")
     private LinkedHashMap<String, String> countryOptions;
-    private LinkedHashMap<String, String> sex;
 
+    private LinkedHashMap<String, String> sexOptions;
 
     public Student()
     {
-        sex = new LinkedHashMap<String, String>();
+        sexOptions = new LinkedHashMap<String, String>();
 
-        sex.put("mele", "Male");
-        sex.put("female", "Female");
+        sexOptions.put("male", "Male");
+        sexOptions.put("female", "Female");
 
     }
 
@@ -48,16 +56,7 @@ public class Student
 
         return country;
     }
-    public void setSex(LinkedHashMap<String, String> sex)
-    {
-        this.sex = sex;
-    }
 
-    public LinkedHashMap<String, String> getSex()
-    {
-
-        return sex;
-    }
 
     public void setFavoriteLanguage(String favoriteLanguage)
     {
@@ -106,4 +105,12 @@ public class Student
     {
         return lastName;
     }
+
+    public String getSex(){return sex;}
+
+    public void setSex(String sex){this.sex = sex;}
+
+    public LinkedHashMap<String, String> getSexOptions(){return sexOptions;}
+
+    public void setSexOptions(LinkedHashMap<String, String> sexOptions){this.sexOptions = sexOptions;}
 }

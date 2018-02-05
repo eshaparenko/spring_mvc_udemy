@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
@@ -21,10 +20,10 @@ Sex: ${student.sex}
 Company: ${student.company}
 <br><br>
 Operating systems:
-<%--<ul>--%>
-    <%--<c:forEach var="temp" items="${student.operatingSystems}">--%>
-    <%--<li>${temp}</li>--%>
-    <%--</c:forEach>--%>
-<%--</ul>--%>
+<ul>
+    <c:forEach var="temp" items="${student.operatingSystems}">
+    <li>${temp}</li>
+    </c:forEach>
+</ul>
 </body>
 </html>

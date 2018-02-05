@@ -1,15 +1,20 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Student Registration Form</title>
+    <style>
+        .error {color:red}
+    </style>
 </head>
 <body>
-
+    <i>Fill out the form. Asterisk (*) means required.</i>
     <form:form action="processForm" modelAttribute="student">
-        First name: <form:input path="firstName"/>
+        First name (*): <form:input path="firstName"/>
+        <form:errors path="firstName" cssClass="error"/>
         <br><br>
-        Last name: <form:input path="lastName"/>
+        Last name (*): <form:input path="lastName"/>
+        <form:errors path="lastName" cssClass="error"/>
         <br><br>
         Country:
         <form:select path="company">
@@ -22,8 +27,8 @@
         <br><br>
         Sex:
         <%--read options from object--%>
-        <form:select path="sex" multiple="false">
-                <form:options items="${student.sex}"/>
+        <form:select path="sex">
+                <form:options items="${student.sexOptions}"/>
         </form:select>
 
         <br><br>
@@ -40,9 +45,9 @@
         C++<form:radiobutton path="favoriteLanguage" value="C++"/>
         <br><br>
 
-        <%--Linux<form:checkbox path="operatingSystems" value="Linux"/>--%>
-        <%--Mac<form:checkbox path="operatingSystems" value="Mac"/>--%>
-        <%--MS Windows<form:checkbox path="operatingSystems" value="MS Windows"/>--%>
+        Linux<form:checkbox path="operatingSystems" value="Linux"/>
+        Mac<form:checkbox path="operatingSystems" value="Mac"/>
+        MS Windows<form:checkbox path="operatingSystems" value="MS Windows"/>
         <br><br>
 
         <input type="submit" value="Submit">
